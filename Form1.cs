@@ -63,12 +63,31 @@ namespace ChessGUI
                             if (board.TheGrid[i, j].CurrentPiece.PieceType != null)
                             {
                                 btnGrid[i, j].Text = board.TheGrid[i, j].CurrentPiece.PieceType;
+                                if (board.TheGrid[i, j].CurrentPiece.IsPlayerControlled)
+                                {
+                                    btnGrid[i, j].ForeColor = Color.Black;
+                                }
+                                else
+                                {
+                                    btnGrid[i,j].ForeColor = Color.Crimson;
+                                }
                             }
                     }
                     else
                     {
                         btnGrid[i, j].Text = "";
                     }
+                }
+            }
+        }
+
+        public void CleanseCellsOfColour()
+        {
+            for (int i = 0; i < board.Size; i++)
+            {
+                for (int j = 0; j < board.Size; j++)
+                {
+                    btnGrid[i, j].BackColor = SystemColors.ControlLight;
                 }
             }
         }
@@ -128,6 +147,10 @@ namespace ChessGUI
             }
             RenderChessPieces();
             RenderLegalmoves();
+            if (!board.game.IsPieceSelected)
+            {
+                CleanseCellsOfColour();
+            }
         }
     }
 }
