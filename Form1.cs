@@ -14,6 +14,7 @@ namespace ChessGUI
     public partial class Form1 : Form
     {
         private static  Board board = new Board(8);
+        public Game game = new Game(board);
 
         public Button[,] btnGrid = new Button[board.Size, board.Size];
         public Form1()
@@ -139,15 +140,15 @@ namespace ChessGUI
             if (board.TheGrid[x, y].CurrentPiece != null)
             {
                 string piece = board.TheGrid[x, y].CurrentPiece.PieceType;
-                board.MarkNextLegalMoves(board.TheGrid[x, y], piece);
+                game.Turn(x,y, piece);
             }
             else
             {
-                board.MarkNextLegalMoves(board.TheGrid[x, y], null);
+                game.Turn(x, y, null);
             }
             RenderChessPieces();
             RenderLegalmoves();
-            if (!board.game.IsPieceSelected)
+            if (!game.IsPieceSelected)
             {
                 CleanseCellsOfColour();
             }
