@@ -21,6 +21,7 @@ namespace ChessGUI
         {
             InitializeComponent();
             PopulateGird();
+            UpdateTurnLabels();
         }
 
         public void PopulateGird()
@@ -109,7 +110,7 @@ namespace ChessGUI
                         {
                             if (board.TheGrid[i, j].CurrentPiece != null)
                             {
-                                if (!board.TheGrid[i, j].CurrentPiece.IsPlayerControlled)
+                                if (board.TheGrid[i, j].CurrentPiece.IsPlayerControlled != game.IsPlayerTurn)
                                 {
                                     btnGrid[i, j].BackColor = Color.Yellow;
                                 }
@@ -122,6 +123,20 @@ namespace ChessGUI
                         btnGrid[i, j].Text = "";
                     }
                 }
+            }
+        }
+
+        private void UpdateTurnLabels()
+        {
+            if (game.IsPlayerTurn)
+            {
+                lbl_playerTurn.Text = "Your Turn!";
+                lbl_enemyTurn.Text = "";
+            }
+            else
+            {
+                lbl_enemyTurn.Text = "Your Turn!";
+                lbl_playerTurn.Text = "";
             }
         }
    
@@ -152,6 +167,7 @@ namespace ChessGUI
             {
                 CleanseCellsOfColour();
             }
+            UpdateTurnLabels();
         }
     }
 }
